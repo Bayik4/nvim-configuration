@@ -1,4 +1,5 @@
 require("config.lazy")
+require("config.lsp")
 
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
