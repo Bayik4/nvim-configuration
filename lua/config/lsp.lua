@@ -1,14 +1,13 @@
 local lspconfig = require("lspconfig")
 
--- Daftar LSP Server yang ingin digunakan
-local servers = { "lua_ls", "ts_ls", "pyright", "html", "cssls" }
-
--- Konfigurasi untuk setiap server LSP
-for _, server in ipairs(servers) do
-  lspconfig[server].setup({
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
-  })
-end
+-- Auto-install LSP saat dibutuhkan
+require("mason-lspconfig").setup_handlers({
+  function(server_name)
+    lspconfig[server_name].setup({
+      capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    })
+  end,
+})
 
 -- Keybindings untuk LSP
 vim.api.nvim_create_autocmd("LspAttach", {

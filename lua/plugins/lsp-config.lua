@@ -9,7 +9,8 @@ return {
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "ts_ls", "pyright", "html", "cssls" } -- Sesuaikan dengan kebutuhan
+        ensure_installed = { "lua_ls", "ts_ls", "pyright", "html", "cssls" }, -- Sesuaikan dengan kebutuhan
+        automatic_installation = true
       })
     end,
   },
