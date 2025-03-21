@@ -5,12 +5,18 @@ return {
   -- 🔹 Plugin untuk mengelola dan menginstal server LSP
   {
     "williamboman/mason.nvim",
-    dependencies = { "williamboman/mason-lspconfig.nvim" },
+    dependencies = { "williamboman/mason-lspconfig.nvim", "jay-babu/mason-null-ls.nvim" },
     config = function()
       require("mason").setup()
+
       require("mason-lspconfig").setup({
         ensure_installed = { "lua_ls", "ts_ls", "pyright", "html", "cssls" }, -- Sesuaikan dengan kebutuhan
-        automatic_installation = true
+        automatic_installation = true,
+      })
+
+      require("mason-null-ls").setup({
+        ensure_installed = { "prettier", "eslint_d", "stylua", "black", "shfmt" }, -- Sesuaikan dengan kebutuhan
+        automatic_installation = true,
       })
     end,
   },
@@ -42,5 +48,32 @@ return {
       })
     end,
   },
-}
+  {
+    "nvimtools/none-ls.nvim",
+    dependencies = { "mason.nvim", "jay-babu/mason-null-ls.nvim" },
+    config = function()
+      local null_ls = require("null-ls")
 
+      null_ls.setup({
+        sources = {
+          -- 🔸 Formatters
+          null_ls.builtins.formatting.prettier, -- JavaScript, TypeScript, HTML, CSS
+          null_ls.builtins.formatting.stylua, -- Lua
+          null_ls.builtins.formatting.black, -- Python
+          null_ls.builtins.formatting.shfmt, -- Shell script
+
+          -- 🔸 Linters
+          null_ls.builtins.diagnostics.eslint_d, -- JavaScript/TypeScript
+        },
+      })
+
+      -- Keybinding untuk format file
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*",
+        callback = function()
+          vim.lsp.buf.format({ async = false })
+        end,
+      })
+    end,
+  },
+}
