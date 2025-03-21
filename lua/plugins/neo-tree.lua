@@ -14,5 +14,15 @@ return {
   },
   config = function()
     vim.keymap.set('n', '<C-b>', ':Neotree filesystem reveal right<CR>')
+
+    require("neo-tree").setup({
+      filesystem = {
+        filtered_items = {
+          visible = true, -- Tampilkan file tersembunyi seperti .env dan .gitignore
+          hide_dotfiles = false,
+          hide_gitignored = false,
+        }
+      }
+    })
   end
 }
