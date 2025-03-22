@@ -15,7 +15,7 @@ return {
       })
 
       require("mason-null-ls").setup({
-        ensure_installed = { "prettier", "eslint_d", "stylua", "black", "shfmt" }, -- Sesuaikan dengan kebutuhan
+        ensure_installed = { "prettier", "eslint_d", "stylua", "shfmt" }, -- Sesuaikan dengan kebutuhan
         automatic_installation = true,
       })
     end,
@@ -61,6 +61,7 @@ return {
           null_ls.builtins.formatting.stylua, -- Lua
           -- null_ls.builtins.formatting.black, -- Python
           null_ls.builtins.formatting.shfmt, -- Shell script
+          null_ls.builtins.formatting.eslint_d,
 
           -- 🔸 Linters
           null_ls.builtins.diagnostics.eslint_d, -- JavaScript/TypeScript
